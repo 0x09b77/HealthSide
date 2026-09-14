@@ -273,7 +273,7 @@
 				DEVELOPMENT_TEAM = ARQSKUXCN2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Healthside/Info-Debug.plist;
+				INFOPLIST_FILE = "Healthside/Info-Debug.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Healthside uses the camera to scan your lab results.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Healthside uses Face ID to keep your health data private.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
