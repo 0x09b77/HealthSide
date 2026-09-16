@@ -58,7 +58,6 @@ struct RootFeature {
                     state.lock.isLocked = false
                 }
                 return .none
-
             case .lock:
                 return .none
             }

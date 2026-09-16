@@ -48,19 +48,21 @@ Healthside/
 
 1. Open `Healthside.xcodeproj` in Xcode (or build headless:
    `xcodebuild -project Healthside.xcodeproj -scheme Healthside -destination 'platform=iOS Simulator,name=<simulator>' build`).
-2. You need the backend running. From `HealthSideBackEnd/Healthside`:
-   ```bash
-   docker compose up -d      # postgres + redis
-   swift run                 # Vapor server on :8080
-   ```
-3. In Debug the app always points at `http://127.0.0.1:8080`
-   (hardcoded in `Core/Network/NetworkDependency.swift`). To run on a
-   **physical device** (not the simulator) you need to manually swap
-   `127.0.0.1` for your Mac's LAN address (`ifconfig | grep "inet "`).
-   This is already flagged as a TODO in that file.
-4. Cleartext HTTP is only allowed in Debug builds and only for the local
-   network (`Info-Debug.plist`, `NSAllowsLocalNetworking`).
-5. Run the `Healthside` scheme on a simulator.
+2. The app talks to the hosted backend by default
+   (`https://healthsideback-production.up.railway.app`, set in
+   `Core/Network/NetworkDependency.swift` via `StaticBaseUrlProvider`).
+   Both Debug and Release point there, so no local backend, Docker, or LAN
+   setup is needed to run the app. `qa`/`preprod` in `StaticBaseUrlProvider`
+   are still placeholders for when those environments exist.
+3. Run the `Healthside` scheme on a simulator or a device.
+
+To point the app at a local backend instead (e.g. for backend development),
+run `HealthSideBackEnd/Healthside` with `docker compose up -d` + `swift run`
+and temporarily change the `NetworkConfig` environment in
+`NetworkDependency.swift` to `.custom("http://127.0.0.1:8080")` (simulator)
+or your Mac's LAN address (physical device). `Info-Debug.plist` already
+allows cleartext HTTP to the local network for this case
+(`NSAllowsLocalNetworking`).
 
 ## Tests
 

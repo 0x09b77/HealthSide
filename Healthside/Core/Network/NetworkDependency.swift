@@ -13,22 +13,12 @@ private nonisolated enum NetworkKey: DependencyKey {
     static let liveValue: any INetwork = Network(
         config: NetworkConfig(
             provider: StaticBaseUrlProvider.self,
-            environment: currentEnvironment,
+            environment: .prod,
             interceptor: AuthInterceptor(),
             parser: JSONParser(makeDecoder: { .healthside }),
             logger: NetworkLogger()
         )
     )
-
-    /// В Debug ходим в локальный бэкенд.
-    /// На реальном устройстве замени 127.0.0.1 на LAN-адрес Mac (ifconfig | grep "inet ").
-    private static var currentEnvironment: NetworkEnvironment {
-        #if DEBUG
-        .custom("http://127.0.0.1:8080")
-        #else
-        .prod
-        #endif
-    }
 
     // TODO: заменить на unimplemented-заглушку, чтобы ловить незамоканные зависимости в тестах.
     static let testValue: any INetwork = liveValue

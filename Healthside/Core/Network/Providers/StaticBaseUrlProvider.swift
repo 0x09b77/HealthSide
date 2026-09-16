@@ -2,7 +2,7 @@
 //  StaticBaseUrlProvider.swift
 //  Healthside
 //
-//  TODO: заменить домены на реальные.
+//  TODO: qa/preprod пока не подняты, заменить когда появятся.
 //
 
 import Foundation
@@ -15,7 +15,7 @@ public enum StaticBaseUrlProvider: IBaseUrlProvider {
         case .preprod:
             return "https://api.preprod.healthside.app"
         case .prod:
-            return "https://api.healthside.app"
+            return "https://healthsideback-production.up.railway.app"
         case let .custom(url):
             return url
         }
