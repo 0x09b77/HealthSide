@@ -1,0 +1,32 @@
+"welcome.slide1.title" = "Your labs, in one calm place.";
+"welcome.slide1.body" = "Every result together, over time — no more scattered PDFs and photos.";
+"welcome.slide2.title" = "Snap a photo, we do the rest.";
+"welcome.slide2.body" = "Point your camera at a lab result and Healthside reads and organizes it.";
+"welcome.slide3.title" = "See your trends over time.";
+"welcome.slide3.body" = "Track biomarkers across visits and spot what's changing.";
+"welcome.get_started" = "Get started";
+"welcome.have_account" = "Have an account?";
+"welcome.log_in" = "Log in";
+
+"auth.title.login" = "Welcome back";
+"auth.title.register" = "Create your account";
+"auth.subtitle.login" = "Log in to your Healthside account.";
+"auth.subtitle.register" = "Free. Takes a minute.";
+"auth.email.label" = "Email";
+"auth.email.placeholder" = "you@email.com";
+"auth.password.label" = "Password";
+"auth.password.placeholder" = "Password";
+"auth.forgot_password" = "Forgot password?";
+"auth.submit.login" = "Log in";
+"auth.submit.register" = "Create account";
+"auth.terms_notice" = "By continuing you agree to our Terms and Privacy.";
+"auth.footer.login_prompt" = "New here?";
+"auth.footer.register_prompt" = "Have an account?";
+"auth.footer.create_account" = "Create account";
+"auth.footer.log_in" = "Log in";
+
+"auth.error.invalid_email" = "Enter a valid email";
+"auth.error.password_too_short" = "Password must be at least 8 characters";
+"auth.error.password_required" = "Enter your password";
+"auth.error.wrong_credentials" = "Wrong email or password";
+"auth.error.email_taken" = "Email already registered";

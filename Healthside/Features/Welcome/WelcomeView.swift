@@ -19,18 +19,18 @@ struct WelcomeView: View {
     private let slides: [Slide] = [
         Slide(
             symbol: "drop.fill",
-            title: "Your labs, in one calm place.",
-            body: "Every result together, over time — no more scattered PDFs and photos."
+            title: L10n.Welcome.Slide1.title,
+            body: L10n.Welcome.Slide1.body
         ),
         Slide(
             symbol: "camera.viewfinder",
-            title: "Snap a photo, we do the rest.",
-            body: "Point your camera at a lab result and Healthside reads and organizes it."
+            title: L10n.Welcome.Slide2.title,
+            body: L10n.Welcome.Slide2.body
         ),
         Slide(
             symbol: "chart.xyaxis.line",
-            title: "See your trends over time.",
-            body: "Track biomarkers across visits and spot what's changing."
+            title: L10n.Welcome.Slide3.title,
+            body: L10n.Welcome.Slide3.body
         ),
     ]
 
@@ -45,14 +45,14 @@ struct WelcomeView: View {
 
             dots.padding(.bottom, 28)
 
-            HSButton("Get started") {
+            HSButton(L10n.Welcome.getStarted) {
                 store.send(.getStartedTapped)
             }
 
             HStack(spacing: 4) {
-                Text("Have an account?")
+                Text(L10n.Welcome.haveAccount)
                     .foregroundStyle(HSColor.inkSecondary)
-                Button("Log in") {
+                Button(L10n.Welcome.logIn) {
                     store.send(.logInTapped)
                 }
                 .foregroundStyle(HSColor.coral)

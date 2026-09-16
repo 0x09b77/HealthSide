@@ -88,9 +88,9 @@ struct AuthFeature {
             case let .submitFailed(error):
                 state.isSubmitting = false
                 if state.mode == .login, error == .unauthorized {
-                    state.passwordError = "Wrong email or password"
+                    state.passwordError = L10n.Auth.Error.wrongCredentials
                 } else if state.mode == .register, case .conflict = error {
-                    state.emailError = "Email already registered"
+                    state.emailError = L10n.Auth.Error.emailTaken
                 } else {
                     state.passwordError = error.errorDescription
                 }
@@ -112,15 +112,15 @@ struct AuthFeature {
         var isValid = true
 
         if !state.email.contains("@") || state.email.count < 3 {
-            state.emailError = "Enter a valid email"
+            state.emailError = L10n.Auth.Error.invalidEmail
             isValid = false
         }
 
         if state.mode == .register, state.password.count < 8 {
-            state.passwordError = "Password must be at least 8 characters"
+            state.passwordError = L10n.Auth.Error.passwordTooShort
             isValid = false
         } else if state.password.isEmpty {
-            state.passwordError = "Enter your password"
+            state.passwordError = L10n.Auth.Error.passwordRequired
             isValid = false
         }
 

@@ -14,20 +14,20 @@ struct AuthView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                Text(isLogin ? "Welcome back" : "Create your account")
+                Text(isLogin ? L10n.Auth.Title.login : L10n.Auth.Title.register)
                     .font(.system(size: 26, weight: .heavy))
                     .tracking(-0.5)
                     .foregroundStyle(HSColor.ink)
 
-                Text(isLogin ? "Log in to your Healthside account." : "Free. Takes a minute.")
+                Text(isLogin ? L10n.Auth.Subtitle.login : L10n.Auth.Subtitle.register)
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundStyle(HSColor.inkSecondary)
                     .padding(.top, 6)
 
                 VStack(spacing: 16) {
                     HSTextField(
-                        "Email",
-                        placeholder: "you@email.com",
+                        L10n.Auth.Email.label,
+                        placeholder: L10n.Auth.Email.placeholder,
                         text: $store.email,
                         errorMessage: store.emailError,
                         keyboardType: .emailAddress,
@@ -38,8 +38,8 @@ struct AuthView: View {
                     .autocorrectionDisabled()
 
                     HSTextField(
-                        "Password",
-                        placeholder: "Password",
+                        L10n.Auth.Password.label,
+                        placeholder: L10n.Auth.Password.placeholder,
                         text: $store.password,
                         isSecure: true,
                         errorMessage: store.passwordError,
@@ -50,7 +50,7 @@ struct AuthView: View {
                 .padding(.top, 28)
 
                 if isLogin {
-                    Button("Forgot password?") {
+                    Button(L10n.Auth.forgotPassword) {
                         store.send(.forgotPasswordTapped)
                     }
                     .font(.system(size: 13, weight: .semibold))
@@ -60,7 +60,7 @@ struct AuthView: View {
                 }
 
                 HSButton(
-                    isLogin ? "Log in" : "Create account",
+                    isLogin ? L10n.Auth.Submit.login : L10n.Auth.Submit.register,
                     isLoading: store.isSubmitting
                 ) {
                     store.send(.submitTapped)
@@ -69,7 +69,7 @@ struct AuthView: View {
                 .padding(.top, 24)
 
                 if !isLogin {
-                    Text("By continuing you agree to our Terms and Privacy.")
+                    Text(L10n.Auth.termsNotice)
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(HSColor.inkSecondary)
                         .multilineTextAlignment(.center)
@@ -89,9 +89,9 @@ struct AuthView: View {
 
     private var footer: some View {
         HStack(spacing: 4) {
-            Text(isLogin ? "New here?" : "Have an account?")
+            Text(isLogin ? L10n.Auth.Footer.loginPrompt : L10n.Auth.Footer.registerPrompt)
                 .foregroundStyle(HSColor.inkSecondary)
-            Button(isLogin ? "Create account" : "Log in") {
+            Button(isLogin ? L10n.Auth.Footer.createAccount : L10n.Auth.Footer.logIn) {
                 store.send(.modeToggled)
             }
             .foregroundStyle(HSColor.coral)

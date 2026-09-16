@@ -5,6 +5,14 @@
 ## macOS
 .DS_Store
 
+## SwiftGen output (Healthside/Generated/) is committed on purpose, not ignored:
+## Xcode's synchronized-group file list is computed before the SwiftGen build
+## phase runs, so a from-scratch (missing) Generated/ folder makes the first
+## build fail with "cannot find 'Asset'/'L10n' in scope" until a second build
+## picks the freshly created files up. Committing them means a fresh clone
+## always has something on disk to compile against; the build phase still
+## overwrites them from swiftgen.yml + Resources on every build.
+
 ## User settings
 xcuserdata/
 

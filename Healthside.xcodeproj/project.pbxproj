@@ -61,6 +61,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2AA44C642FEEB2E70058D6C0 /* Build configuration list for PBXNativeTarget "Healthside" */;
 			buildPhases = (
+				01467264EB55EAD90D24F4AF /* SwiftGen */,
 				2AA44C552FEEB2E50058D6C0 /* Sources */,
 				2AA44C562FEEB2E50058D6C0 /* Frameworks */,
 				2AA44C572FEEB2E50058D6C0 /* Resources */,
@@ -131,6 +132,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		01467264EB55EAD90D24F4AF /* SwiftGen */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftGen;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin:/usr/local/bin\"\nmkdir -p \"${SRCROOT}/Healthside/Generated\"\nif which swiftgen >/dev/null; then\n  swiftgen config run --config \"${SRCROOT}/swiftgen.yml\"\nelse\n  echo \"warning: SwiftGen not installed. Run: brew install swiftgen\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2AA44C552FEEB2E50058D6C0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -180,7 +203,7 @@
 				DEVELOPMENT_TEAM = ARQSKUXCN2;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -244,7 +267,7 @@
 				DEVELOPMENT_TEAM = ARQSKUXCN2;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

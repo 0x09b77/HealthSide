@@ -1,0 +1,18 @@
+strings:
+  inputs:
+    - Healthside/Resources/en.lproj/Localizable.strings
+    - Healthside/Resources/en.lproj/Localizable.stringsdict
+  outputs:
+    - templateName: structured-swift5
+      output: Healthside/Generated/Strings.swift
+      params:
+        publicAccess: true
+
+xcassets:
+  inputs:
+    - Healthside/Resources/Assets.xcassets
+  outputs:
+    - templateName: swift5
+      output: Healthside/Generated/Assets.swift
+      params:
+        publicAccess: true

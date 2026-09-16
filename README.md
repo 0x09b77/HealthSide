@@ -17,9 +17,14 @@ Talks to the backend in the sibling repo `HealthSideBackEnd`.
 - **Custom network layer** (`Core/Network`) on top of `URLSession`: adapter/retry interceptors, JSON parser, status validator. Alamofire is listed as a dependency but not actually used anywhere (see "Known gaps" below).
 - **Keychain** for tokens (`Core/TokenStore`).
 - **UserDefaults** for onboarding flags (welcome/consent/biometric lock).
+- **SwiftGen** (`swiftgen.yml`) generates type-safe accessors for colors,
+  images, and localized strings from `Assets.xcassets` and
+  `Resources/en.lproj/Localizable.strings`/`.stringsdict` into
+  `Healthside/Generated/` (`Asset.*`, `L10n.*`). See "Localization &
+  SwiftGen" below.
 - No tests, SwiftData, or Firebase in the project yet (see below).
 
-Requirements: **Xcode 26.5**, iOS deployment target **26.5**, Swift 5 tools (Swift 6 language mode is not enforced).
+Requirements: **Xcode 26.5**, iOS deployment target **26.5**, Swift 5 tools (Swift 6 language mode is not enforced), **SwiftGen** (`brew install swiftgen`).
 
 ## Structure
 
@@ -63,6 +68,39 @@ and temporarily change the `NetworkConfig` environment in
 or your Mac's LAN address (physical device). `Info-Debug.plist` already
 allows cleartext HTTP to the local network for this case
 (`NSAllowsLocalNetworking`).
+
+## Localization & SwiftGen
+
+Colors, images, and localized strings live as data (`Assets.xcassets`,
+`Resources/en.lproj/Localizable.strings`/`.stringsdict`), not hardcoded in
+Swift. A **Run Script build phase** ("SwiftGen", runs on every build) invokes
+`swiftgen config run --config swiftgen.yml`, which regenerates
+`Healthside/Generated/Assets.swift` (`Asset.<name>.swiftUIColor` /
+`.image`) and `Healthside/Generated/Strings.swift` (`L10n.<Screen>.<key>`)
+from those inputs.
+
+- `HSColor` is now a thin alias layer over `Asset.*` so existing
+  `HSColor.coral` etc. call sites didn't need to change.
+- Only `Welcome` and `Auth` have had their literal strings migrated to
+  `Localizable.strings`/`L10n` so far, as the first pass proving the
+  pipeline end to end. The rest of the screens still have inline string
+  literals; migrate them the same way, screen by screen (add the key to
+  `Localizable.strings`, use `L10n.<Screen>.<key>` in the view/reducer).
+- `Generated/` is **committed to git**, not gitignored: Xcode's
+  file-system-synchronized group computes its file list before the
+  SwiftGen build phase runs, so a missing/empty `Generated/` folder makes
+  the *first* build after a fresh clone fail with "cannot find 'Asset'/'L10n'
+  in scope" (a second build then picks the freshly generated files up).
+  Committing them avoids that trap; the build phase still overwrites them
+  from source on every build, so they never really go stale.
+- The script needs `swiftgen` on `PATH`; it's a Homebrew binary
+  (`/opt/homebrew/bin`), which Xcode's Run Script phases don't include by
+  default, so the script phase prepends it explicitly. `ENABLE_USER_SCRIPT_SANDBOXING`
+  is off for this target (Xcode's script sandbox otherwise blocks the
+  script from reading `swiftgen.yml`/`Resources`).
+- `stringsdict` is wired into `swiftgen.yml` (merged into the same `strings`
+  command, `Resources/en.lproj/Localizable.stringsdict`) but currently empty:
+  no plural strings exist in the app yet.
 
 ## Tests
 
