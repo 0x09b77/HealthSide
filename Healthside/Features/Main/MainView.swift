@@ -15,19 +15,19 @@ struct MainView: View {
     var body: some View {
         TabView(selection: $store.selectedTab.sending(\.tabSelected)) {
             HomeView(store: store.scope(state: \.home, action: \.home))
-                .tabItem { Label("Home", systemImage: "house") }
+                .tabItem { Label(L10n.Main.Tab.home, systemImage: "house") }
                 .tag(MainFeature.Tab.home)
 
             RecordsView(store: store.scope(state: \.records, action: \.records))
-                .tabItem { Label("Records", systemImage: "doc.text") }
+                .tabItem { Label(L10n.Records.title, systemImage: "doc.text") }
                 .tag(MainFeature.Tab.records)
 
             InsightsView(store: store.scope(state: \.insights, action: \.insights))
-                .tabItem { Label("Insights", systemImage: "chart.xyaxis.line") }
+                .tabItem { Label(L10n.Insights.title, systemImage: "chart.xyaxis.line") }
                 .tag(MainFeature.Tab.insights)
 
             ProfileView(store: store.scope(state: \.profile, action: \.profile))
-                .tabItem { Label("Profile", systemImage: "person") }
+                .tabItem { Label(L10n.Profile.title, systemImage: "person") }
                 .tag(MainFeature.Tab.profile)
         }
         .overlay(alignment: .bottom) { addButton }
@@ -51,7 +51,7 @@ struct MainView: View {
                 .shadow(color: HSColor.coral.opacity(0.35), radius: 12, y: 6)
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("Add analysis")
+        .accessibilityLabel(L10n.Add.title)
         .padding(.bottom, 2)
     }
 }

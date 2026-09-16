@@ -61,7 +61,7 @@ struct DocumentView: View {
     private func summaryCard(_ summary: String) -> some View {
         card {
             VStack(alignment: .leading, spacing: 8) {
-                sectionLabel("SUMMARY")
+                sectionLabel(L10n.Document.summaryLabel)
                 Text(summary)
                     .font(.system(size: 15, weight: .medium))
                     .foregroundStyle(HSColor.ink)
@@ -73,7 +73,7 @@ struct DocumentView: View {
     private func diagnosisCard(_ diagnosis: String) -> some View {
         card {
             VStack(alignment: .leading, spacing: 8) {
-                sectionLabel("DIAGNOSIS")
+                sectionLabel(L10n.Document.diagnosisLabel)
                 Text(diagnosis)
                     .font(.system(size: 15, weight: .medium))
                     .foregroundStyle(HSColor.ink)
@@ -85,10 +85,10 @@ struct DocumentView: View {
     private var failedCard: some View {
         card {
             VStack(alignment: .leading, spacing: 8) {
-                Text("Couldn't read this one")
+                Text(L10n.Document.Failed.title)
                     .font(.system(size: 17, weight: .heavy))
                     .foregroundStyle(HSColor.ink)
-                Text("We couldn't read this file clearly. Your original is saved.")
+                Text(L10n.Document.Failed.body)
                     .font(.system(size: 14, weight: .medium))
                     .foregroundStyle(HSColor.inkSecondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -98,7 +98,7 @@ struct DocumentView: View {
 
     private var biomarkersSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            sectionLabel("RESULTS")
+            sectionLabel(L10n.Document.resultsLabel)
             VStack(spacing: 8) {
                 ForEach(store.biomarkers) { marker in
                     biomarkerRow(marker)
@@ -117,31 +117,15 @@ struct DocumentView: View {
                 .font(.system(size: 15, weight: .bold))
                 .monospacedDigit()
                 .foregroundStyle(HSColor.ink)
-            biomarkerBadge(marker.status)
+            biomarkerStatusBadge(marker.status)
         }
         .padding(14)
         .background(RoundedRectangle(cornerRadius: 14).fill(HSColor.surface))
         .overlay(RoundedRectangle(cornerRadius: 14).stroke(HSColor.hairline, lineWidth: 1))
     }
 
-    @ViewBuilder
-    private func biomarkerBadge(_ status: BiomarkerStatus) -> some View {
-        switch status {
-        case .normal:
-            HSStatusBadge("Normal", systemImage: "checkmark", kind: .success)
-        case .high:
-            HSStatusBadge("Above", systemImage: "arrow.up", kind: .warning)
-        case .low:
-            HSStatusBadge("Below", systemImage: "arrow.down", kind: .warning)
-        case .critical:
-            HSStatusBadge("Critical", systemImage: "exclamationmark.triangle", kind: .danger)
-        case .unknown:
-            EmptyView()
-        }
-    }
-
     private var deleteButton: some View {
-        HSButton("Delete record", style: .secondary, isLoading: store.isDeleting) {
+        HSButton(L10n.Document.deleteButton, style: .secondary, isLoading: store.isDeleting) {
             store.send(.deleteButtonTapped)
         }
         .padding(.top, 8)

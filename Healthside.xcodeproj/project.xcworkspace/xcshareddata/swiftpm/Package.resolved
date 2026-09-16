@@ -1,15 +1,6 @@
 {
-  "originHash" : "f43765c9224c14e14d0826c265e43eb8651197b77afcd0c98672af44ceed651c",
+  "originHash" : "e7024a9cd3fa1c40fa4003b3b2b186c00ba720c787de8ba274caf8fc530677e8",
   "pins" : [
-    {
-      "identity" : "alamofire",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/Alamofire/Alamofire",
-      "state" : {
-        "revision" : "7595cbcf59809f9977c5f6378500de2ad73b7ddb",
-        "version" : "5.12.0"
-      }
-    },
     {
       "identity" : "combine-schedulers",
       "kind" : "remoteSourceControl",
@@ -17,15 +8,6 @@
       "state" : {
         "revision" : "dcccb979a2183b8df3334237e3dc1ae2b4116a86",
         "version" : "1.2.0"
-      }
-    },
-    {
-      "identity" : "kingfisher",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/onevcat/Kingfisher",
-      "state" : {
-        "revision" : "ac632bd26a1c00f139ff62fd01806f21cf67325e",
-        "version" : "8.10.0"
       }
     },
     {

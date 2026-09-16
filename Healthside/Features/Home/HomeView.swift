@@ -32,7 +32,7 @@ struct HomeView: View {
             Text(Date.now.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day()))
                 .font(.system(size: 13, weight: .semibold))
                 .foregroundStyle(HSColor.inkSecondary)
-            Text("Hi 👋")
+            Text(L10n.Home.greeting)
                 .font(.system(size: 26, weight: .heavy))
                 .tracking(-0.5)
                 .foregroundStyle(HSColor.ink)
@@ -60,7 +60,7 @@ struct HomeView: View {
 
     private func summaryCard(_ document: DocumentDTO) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            HSStatusBadge("Latest", systemImage: "sparkles", kind: .success)
+            HSStatusBadge(L10n.Home.latestBadge, systemImage: "sparkles", kind: .success)
             Text(document.summary ?? "")
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(HSColor.ink)
@@ -77,7 +77,7 @@ struct HomeView: View {
 
     private var recentRecords: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("RECENT RECORDS")
+            Text(L10n.Home.recentRecordsTitle)
                 .font(.system(size: 12, weight: .bold))
                 .tracking(0.06 * 12)
                 .foregroundStyle(HSColor.labelDisabled)
@@ -100,14 +100,14 @@ struct HomeView: View {
                         .font(.system(size: 40, weight: .semibold))
                         .foregroundStyle(HSColor.coral)
                 )
-            Text("Add your first analysis")
+            Text(L10n.Home.Empty.title)
                 .font(.system(size: 20, weight: .heavy))
                 .foregroundStyle(HSColor.ink)
-            Text("Snap a photo of a lab result and we'll explain it in plain language.")
+            Text(L10n.Home.Empty.body)
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(HSColor.inkSecondary)
                 .multilineTextAlignment(.center)
-            HSButton("Add analysis") {
+            HSButton(L10n.Home.Empty.cta) {
                 store.send(.addAnalysisTapped)
             }
             .padding(.top, 4)
@@ -122,7 +122,7 @@ struct HomeView: View {
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(HSColor.inkSecondary)
                 .multilineTextAlignment(.center)
-            HSButton("Try again", style: .secondary) {
+            HSButton(L10n.Shared.tryAgain, style: .secondary) {
                 store.send(.refresh)
             }
         }

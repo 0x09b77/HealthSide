@@ -96,7 +96,7 @@ struct BiomarkerView: View {
                     RoundedRectangle(cornerRadius: 3)
                         .fill(HSColor.successFill)
                         .frame(width: 18, height: 10)
-                    Text("Normal range")
+                    Text(L10n.Biomarker.normalRangeLegend)
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(HSColor.inkSecondary)
                 }
@@ -118,14 +118,14 @@ struct BiomarkerView: View {
 
     private var trendText: String {
         guard let previous = series.previous, let latest = series.latest else {
-            return "Only one measurement so far — add more results to see a trend."
+            return L10n.Biomarker.Trend.singleMeasurement
         }
         let since = previous.date.formatted(.dateTime.month(.abbreviated).year())
         return switch series.trend {
-        case .up: "Trending up since \(since) (was \(BiomarkerRow.format(previous.value)))."
-        case .down: "Trending down since \(since) (was \(BiomarkerRow.format(previous.value)))."
-        case .stable: "Steady since \(since)."
-        case .unknown: "Latest reading from \(latest.date.formatted(.dateTime.month(.abbreviated).year()))."
+        case .up: L10n.Biomarker.Trend.up(since, BiomarkerRow.format(previous.value))
+        case .down: L10n.Biomarker.Trend.down(since, BiomarkerRow.format(previous.value))
+        case .stable: L10n.Biomarker.Trend.stable(since)
+        case .unknown: L10n.Biomarker.Trend.latest(latest.date.formatted(.dateTime.month(.abbreviated).year()))
         }
     }
 
@@ -133,7 +133,7 @@ struct BiomarkerView: View {
 
     private var sources: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("SOURCES")
+            Text(L10n.Biomarker.sourcesTitle)
                 .font(.system(size: 12, weight: .bold))
                 .tracking(0.72)
                 .foregroundStyle(HSColor.labelDisabled)

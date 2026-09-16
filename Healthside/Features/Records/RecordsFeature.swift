@@ -20,9 +20,17 @@ struct RecordsFeature {
     @ObservableState
     struct State: Equatable {
         nonisolated enum Filter: String, CaseIterable, Equatable {
-            case all = "All"
-            case labs = "Labs"
-            case imaging = "Imaging"
+            case all
+            case labs
+            case imaging
+
+            var displayName: String {
+                switch self {
+                case .all: L10n.Records.Filter.all
+                case .labs: L10n.Records.Filter.labs
+                case .imaging: L10n.Records.Filter.imaging
+                }
+            }
         }
 
         var documents: [DocumentDTO] = []
@@ -133,21 +141,12 @@ struct RecordsFeature {
         let documentsService = documentsService
         let clock = clock
         return .run { send in
-            var attempt = 0
-            while !Task.isCancelled, attempt <= Polling.maxAttempts {
-                if attempt > 0 {
-                    try await clock.sleep(for: Polling.delay(attempt: attempt))
-                }
-                do {
-                    let documents = try await documentsService.list()
-                    await send(.documentsResponse(.success(documents)))
-                    guard documents.contains(where: { !$0.status.isTerminal }) else { return }
-                } catch {
-                    await send(.documentsResponse(.failure(error as? APIError ?? .unknown)))
-                    return
-                }
-                attempt += 1
-            }
+            try await Polling.run(
+                clock: clock,
+                fetch: { try await documentsService.list() },
+                isTerminal: { documents in !documents.contains { !$0.status.isTerminal } },
+                onResult: { await send(.documentsResponse($0)) }
+            )
         }
     }
 }

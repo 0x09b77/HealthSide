@@ -14,7 +14,7 @@ Talks to the backend in the sibling repo `HealthSideBackEnd`.
 
 - **SwiftUI** for all UI.
 - **TCA** ([swift-composable-architecture](https://github.com/pointfreeco/swift-composable-architecture) 1.26) for state, navigation, and DI (`@Dependency`).
-- **Custom network layer** (`Core/Network`) on top of `URLSession`: adapter/retry interceptors, JSON parser, status validator. Alamofire is listed as a dependency but not actually used anywhere (see "Known gaps" below).
+- **Custom network layer** (`Core/Network`) on top of `URLSession`: `CompositeInterceptor([AuthInterceptor(), RetryInterceptor()])` (auth/refresh, then retry on offline/timeout), JSON parser, status validator.
 - **Keychain** for tokens (`Core/TokenStore`).
 - **UserDefaults** for onboarding flags (welcome/consent/biometric lock).
 - **SwiftGen** (`swiftgen.yml`) generates type-safe accessors for colors,
@@ -81,11 +81,11 @@ from those inputs.
 
 - `HSColor` is now a thin alias layer over `Asset.*` so existing
   `HSColor.coral` etc. call sites didn't need to change.
-- Only `Welcome` and `Auth` have had their literal strings migrated to
-  `Localizable.strings`/`L10n` so far, as the first pass proving the
-  pipeline end to end. The rest of the screens still have inline string
-  literals; migrate them the same way, screen by screen (add the key to
-  `Localizable.strings`, use `L10n.<Screen>.<key>` in the view/reducer).
+- All screens' literal strings are migrated to `Localizable.strings`/`L10n`
+  (including `APIError`'s error descriptions and `AlertState` text). New
+  screens/strings follow the same pattern: add the key to
+  `Localizable.strings`, use `L10n.<Screen>.<key>` in the view/reducer,
+  then run `swiftgen config run --config swiftgen.yml` (or just build).
 - `Generated/` is **committed to git**, not gitignored: Xcode's
   file-system-synchronized group computes its file list before the
   SwiftGen build phase runs, so a missing/empty `Generated/` folder makes
@@ -101,6 +101,24 @@ from those inputs.
 - `stringsdict` is wired into `swiftgen.yml` (merged into the same `strings`
   command, `Resources/en.lproj/Localizable.stringsdict`) but currently empty:
   no plural strings exist in the app yet.
+
+## Design tokens & dark mode
+
+All 21 `HSColor` tokens (plus a new `brandTeal`) are named colorsets in
+`Assets.xcassets` with both light and dark appearances (each colorset's
+`Contents.json` carries a `luminosity: dark` variant alongside the default).
+
+- `background`/`surface` dark values are the exact hex from `Design-Spec.md`
+  (`#1E1B18`/`#29241F`); `status/green|yellow|red` and `brand/teal` now match
+  the spec's light-mode hex exactly (they'd drifted before).
+- Every other dark value is *derived*, not hand-picked, since the spec only
+  gives exact bg/surface hex and says "same accents, a bit lighter" for the
+  rest: accents/status colors are the light hex with HSL lightness raised
+  ~10-12%; text/neutral steps are a warm-hue ladder off the dark background;
+  soft/fill/border variants are alpha-blends of the (lightened) accent over
+  the dark surface. It's internally consistent and reproducible from the
+  light palette, but hasn't had a visual design pass yet: expect to tweak
+  specific values by eye once someone looks at it on a dark-mode device.
 
 ## Tests
 
@@ -125,24 +143,16 @@ There's nothing for `xcodebuild test` to run against this scheme.
 
 ## Known gaps and issues (as of the last review)
 
-A full breakdown is in the chat/project history. Short version:
+A full breakdown is in the chat/project history. Fixed since the initial
+review: the consent flag now resets on every path that ends a session
+(`ProfileFeature.logoutTapped`, `RootFeature`'s lock-screen logout,
+`AppFeature.sessionExpired`) so a second account on the same device gets the
+Consent screen again; `status/green|yellow|red` and `brand/teal` now match
+`Design-Spec.md` exactly and dark mode exists (see "Design tokens & dark
+mode" above); `RetryInterceptor` is wired in via `CompositeInterceptor`;
+the three copies of the polling backoff loop are now one `Polling.run`
+helper; Alamofire and Kingfisher are removed. Still open:
 
-- **Consent flag isn't scoped to the account.** `OnboardingClient` stores
-  `consent.accepted` in `UserDefaults` (device-wide), and logout never
-  resets it (`ProfileFeature`/`RootFeature`), so switching accounts on the
-  same device can skip the medical-data-processing consent screen entirely.
-- **Design tokens have drifted from the spec.** `HSColor` uses different
-  hex values than `status/green|yellow|red` in `Design-Spec.md`, `brand/teal`
-  is missing entirely, and dark mode (called mandatory in the spec) isn't
-  implemented.
-- **Alamofire and Kingfisher** are added as SPM dependencies but never
-  imported anywhere: dead weight in the build.
-- **`RetryInterceptor`/`CompositeInterceptor`** are written but not wired up
-  in `NetworkDependency.swift`, so there's currently no real retry on
-  offline/timeout.
-- **The polling loop is duplicated** across `HomeFeature`, `RecordsFeature`,
-  and `DocumentFeature`: the same ~15-line backoff loop is copy-pasted three
-  times.
 - **No SwiftData / offline cache.** Without a network connection, screens
   just show an error; there's no write-through cache as described in
   `Persistence-and-Testing.md`.

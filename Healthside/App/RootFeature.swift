@@ -32,6 +32,7 @@ struct RootFeature {
     }
 
     @Dependency(\.tokenStore) var tokenStore
+    @Dependency(\.onboarding) var onboarding
 
     var body: some Reducer<State, Action> {
         Scope(state: \.app, action: \.app) { AppFeature() }
@@ -49,6 +50,8 @@ struct RootFeature {
             // Выход с экрана лока: чистим сессию и уводим на логин.
             case .lock(.delegate(.logOutRequested)):
                 try? tokenStore.clear()
+                // Согласие — per-account, не per-device (см. ProfileFeature.logoutTapped).
+                onboarding.setConsentAccepted(false)
                 state.app = .auth(AuthFeature.State())
                 return .none
 

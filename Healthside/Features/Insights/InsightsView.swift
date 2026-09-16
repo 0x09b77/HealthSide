@@ -13,7 +13,7 @@ struct InsightsView: View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             content
                 .background(HSColor.background)
-                .navigationTitle("Insights")
+                .navigationTitle(L10n.Insights.title)
         } destination: { store in
             switch store.case {
             case let .biomarker(store):
@@ -41,9 +41,9 @@ struct InsightsView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 if !store.worthWatching.isEmpty {
-                    section("WORTH WATCHING", series: store.worthWatching)
+                    section(L10n.Insights.worthWatching, series: store.worthWatching)
                 }
-                section("ALL MARKERS", series: store.series)
+                section(L10n.Insights.allMarkers, series: store.series)
             }
             .padding(20)
         }
@@ -72,10 +72,10 @@ struct InsightsView: View {
 
     private var emptyState: some View {
         VStack(spacing: 10) {
-            Text("No trends yet")
+            Text(L10n.Insights.Empty.title)
                 .font(.system(size: 18, weight: .heavy))
                 .foregroundStyle(HSColor.ink)
-            Text("Add a couple of lab results and your trends will show up here.")
+            Text(L10n.Insights.Empty.body)
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(HSColor.inkSecondary)
                 .multilineTextAlignment(.center)
@@ -91,7 +91,7 @@ struct InsightsView: View {
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(HSColor.inkSecondary)
                 .multilineTextAlignment(.center)
-            HSButton("Try again", style: .secondary) {
+            HSButton(L10n.Shared.tryAgain, style: .secondary) {
                 store.send(.refresh)
             }
             .padding(.horizontal, 60)
@@ -145,11 +145,11 @@ struct BiomarkerSeriesRow: View {
 
     private var statusWord: String {
         switch series.status {
-        case .normal: "normal"
-        case .high: "above range"
-        case .low: "below range"
-        case .critical: "critical"
-        case .unknown: "unknown"
+        case .normal: L10n.Status.BiomarkerA11y.normal
+        case .high: L10n.Status.BiomarkerA11y.high
+        case .low: L10n.Status.BiomarkerA11y.low
+        case .critical: L10n.Status.BiomarkerA11y.critical
+        case .unknown: L10n.Status.BiomarkerA11y.unknown
         }
     }
 }
@@ -158,13 +158,13 @@ struct BiomarkerSeriesRow: View {
 func biomarkerStatusBadge(_ status: BiomarkerStatus) -> some View {
     switch status {
     case .normal:
-        HSStatusBadge("Normal", systemImage: "checkmark", kind: .success)
+        HSStatusBadge(L10n.Status.Biomarker.normal, systemImage: "checkmark", kind: .success)
     case .high:
-        HSStatusBadge("Above", systemImage: "arrow.up", kind: .warning)
+        HSStatusBadge(L10n.Status.Biomarker.high, systemImage: "arrow.up", kind: .warning)
     case .low:
-        HSStatusBadge("Below", systemImage: "arrow.down", kind: .warning)
+        HSStatusBadge(L10n.Status.Biomarker.low, systemImage: "arrow.down", kind: .warning)
     case .critical:
-        HSStatusBadge("Critical", systemImage: "exclamationmark.triangle", kind: .danger)
+        HSStatusBadge(L10n.Status.Biomarker.critical, systemImage: "exclamationmark.triangle", kind: .danger)
     case .unknown:
         EmptyView()
     }

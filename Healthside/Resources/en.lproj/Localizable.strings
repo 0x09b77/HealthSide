@@ -30,3 +30,125 @@
 "auth.error.password_required" = "Enter your password";
 "auth.error.wrong_credentials" = "Wrong email or password";
 "auth.error.email_taken" = "Email already registered";
+
+"shared.try_again" = "Try again";
+"shared.cancel" = "Cancel";
+"shared.log_out" = "Log out";
+
+"main.tab.home" = "Home";
+
+"home.greeting" = "Hi 👋";
+"home.latest_badge" = "Latest";
+"home.recent_records_title" = "RECENT RECORDS";
+"home.empty.title" = "Add your first analysis";
+"home.empty.body" = "Snap a photo of a lab result and we'll explain it in plain language.";
+"home.empty.cta" = "Add analysis";
+
+"records.title" = "Records";
+"records.filter_accessibility_label" = "Filter";
+"records.search_prompt" = "Search";
+"records.filter.all" = "All";
+"records.filter.labs" = "Labs";
+"records.filter.imaging" = "Imaging";
+"records.empty.title" = "No records yet";
+"records.empty.body" = "Add a lab result and it will show up here.";
+"records.empty_filtered.title" = "Nothing found";
+"records.empty_filtered.body" = "Try a different search or filter.";
+
+"document.summary_label" = "SUMMARY";
+"document.diagnosis_label" = "DIAGNOSIS";
+"document.results_label" = "RESULTS";
+"document.failed.title" = "Couldn't read this one";
+"document.failed.body" = "We couldn't read this file clearly. Your original is saved.";
+"document.delete_button" = "Delete record";
+"document.alert.title" = "Delete this record?";
+"document.alert.confirm" = "Delete";
+"document.alert.message" = "This permanently removes your analysis and its data. This can't be undone.";
+
+"status.document.done" = "Read";
+"status.document.pending" = "Queued";
+"status.document.processing" = "Reading…";
+"status.document.failed" = "Failed";
+"status.biomarker.normal" = "Normal";
+"status.biomarker.high" = "Above";
+"status.biomarker.low" = "Below";
+"status.biomarker.critical" = "Critical";
+"status.biomarker_a11y.normal" = "normal";
+"status.biomarker_a11y.high" = "above range";
+"status.biomarker_a11y.low" = "below range";
+"status.biomarker_a11y.critical" = "critical";
+"status.biomarker_a11y.unknown" = "unknown";
+
+"add.title" = "Add analysis";
+"add.subtitle" = "Snap a photo, scan, or pick a file.";
+"add.back" = "Back";
+"add.source.camera.title" = "Camera";
+"add.source.camera.subtitle" = "Scan a document";
+"add.source.photo_library.title" = "Photo library";
+"add.source.photo_library.subtitle" = "Pick from photos";
+"add.source.files.title" = "Files";
+"add.source.files.subtitle" = "PDF from Files";
+"add.review.title" = "Review & upload";
+"add.review.label_field" = "Label (optional)";
+"add.review.label_placeholder" = "Lipid panel — Jun 25";
+"add.review.upload" = "Upload";
+"add.uploaded.title" = "Added";
+"add.uploaded.body" = "We're reading it now. You can leave — we'll ping you the moment it's ready.";
+"add.uploaded.done" = "Done";
+"add.error.scan_failed" = "Couldn't build a document from that scan.";
+
+"insights.title" = "Insights";
+"insights.worth_watching" = "WORTH WATCHING";
+"insights.all_markers" = "ALL MARKERS";
+"insights.empty.title" = "No trends yet";
+"insights.empty.body" = "Add a couple of lab results and your trends will show up here.";
+
+"biomarker.normal_range_legend" = "Normal range";
+"biomarker.sources_title" = "SOURCES";
+"biomarker.trend.single_measurement" = "Only one measurement so far — add more results to see a trend.";
+"biomarker.trend.up" = "Trending up since %@ (was %@).";
+"biomarker.trend.down" = "Trending down since %@ (was %@).";
+"biomarker.trend.stable" = "Steady since %@.";
+"biomarker.trend.latest" = "Latest reading from %@.";
+
+"setup.consent.title" = "Before we start";
+"setup.consent.body" = "To read your analyses, we process them securely with a trusted provider. Personal details are removed first. You can delete everything anytime.";
+"setup.consent.checkbox" = "I agree to secure cloud processing of my documents.";
+"setup.consent.cta" = "Agree and continue";
+"setup.notifications.title" = "Stay in the loop";
+"setup.notifications.body" = "Get a notification the moment your results are parsed and ready to view.";
+"setup.notifications.enable" = "Enable notifications";
+"setup.notifications.skip" = "Not now";
+"setup.face_id.title" = "Lock with %@";
+"setup.face_id.body" = "Your health data stays private. We'll ask for %@ each time you open the app.";
+"setup.face_id.enable" = "Enable %@";
+"setup.face_id.skip" = "Set up later";
+
+"profile.title" = "Profile";
+"profile.member_since" = "Member since %@";
+"profile.security" = "SECURITY";
+"profile.auto_lock" = "Auto-lock";
+"profile.auto_lock_value" = "After 1 min";
+"profile.change_password" = "Change password";
+"profile.privacy_data" = "PRIVACY & DATA";
+"profile.export_data" = "Export my data";
+"profile.delete_everything" = "Delete everything";
+
+"lock.title" = "Healthside is locked";
+"lock.body" = "Your health data stays private. Unlock with %@ to continue.";
+"lock.failed" = "Couldn't verify it's you.";
+"lock.unlock_button" = "Unlock with %@";
+
+"errors.validation_failed" = "Validation failed";
+"errors.unauthorized" = "Session expired. Please sign in again.";
+"errors.forbidden" = "You don't have access to this resource.";
+"errors.not_found" = "Not found.";
+"errors.conflict" = "Conflict.";
+"errors.too_many_requests" = "Too many requests. Try again later.";
+"errors.file_too_large" = "This file is too large. The limit is 20 MB.";
+"errors.unsupported_media_type" = "Unsupported file type. Use a PDF, JPEG, PNG or HEIC.";
+"errors.offline" = "No internet connection.";
+"errors.timeout" = "Request timed out.";
+"errors.server" = "Server error.";
+"errors.decoding" = "Unexpected response format.";
+"errors.unknown" = "Something went wrong.";

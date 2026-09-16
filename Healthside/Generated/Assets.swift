@@ -24,6 +24,7 @@ public typealias AssetColorTypeAlias = ColorAsset.Color
 public enum Asset {
   public static let accentColor = ColorAsset(name: "AccentColor")
   public static let background = ColorAsset(name: "background")
+  public static let brandTeal = ColorAsset(name: "brandTeal")
   public static let coral = ColorAsset(name: "coral")
   public static let coralRing = ColorAsset(name: "coralRing")
   public static let coralSoft = ColorAsset(name: "coralSoft")

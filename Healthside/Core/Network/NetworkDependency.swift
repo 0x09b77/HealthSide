@@ -14,7 +14,8 @@ private nonisolated enum NetworkKey: DependencyKey {
         config: NetworkConfig(
             provider: StaticBaseUrlProvider.self,
             environment: .prod,
-            interceptor: AuthInterceptor(),
+            // Auth first (401 → refresh → retry), затем общий ретрай на offline/timeout.
+            interceptor: CompositeInterceptor([AuthInterceptor(), RetryInterceptor()]),
             parser: JSONParser(makeDecoder: { .healthside }),
             logger: NetworkLogger()
         )

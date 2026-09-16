@@ -57,10 +57,10 @@ struct AddView: View {
     private var toolbarContent: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             if store.step == .review {
-                Button("Back") { store.send(.backTapped) }
+                Button(L10n.Add.back) { store.send(.backTapped) }
                     .foregroundStyle(HSColor.coral)
             } else if store.step == .source {
-                Button("Cancel") { store.send(.closeTapped) }
+                Button(L10n.Shared.cancel) { store.send(.closeTapped) }
                     .foregroundStyle(HSColor.inkSecondary)
             }
         }
@@ -70,11 +70,11 @@ struct AddView: View {
 
     private var sourceStep: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Add analysis")
+            Text(L10n.Add.title)
                 .font(.system(size: 26, weight: .heavy))
                 .tracking(-0.5)
                 .foregroundStyle(HSColor.ink)
-            Text("Snap a photo, scan, or pick a file.")
+            Text(L10n.Add.subtitle)
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(HSColor.inkSecondary)
                 .padding(.top, 6)
@@ -82,20 +82,20 @@ struct AddView: View {
             VStack(spacing: 12) {
                 sourceRow(
                     icon: "camera.viewfinder",
-                    title: "Camera",
-                    subtitle: "Scan a document"
+                    title: L10n.Add.Source.Camera.title,
+                    subtitle: L10n.Add.Source.Camera.subtitle
                 ) { store.send(.cameraTapped) }
 
                 sourceRow(
                     icon: "photo.on.rectangle",
-                    title: "Photo library",
-                    subtitle: "Pick from photos"
+                    title: L10n.Add.Source.PhotoLibrary.title,
+                    subtitle: L10n.Add.Source.PhotoLibrary.subtitle
                 ) { store.send(.photoLibraryTapped) }
 
                 sourceRow(
                     icon: "folder",
-                    title: "Files",
-                    subtitle: "PDF from Files"
+                    title: L10n.Add.Source.Files.title,
+                    subtitle: L10n.Add.Source.Files.subtitle
                 ) { store.send(.filesTapped) }
             }
             .padding(.top, 26)
@@ -152,7 +152,7 @@ struct AddView: View {
         if let file = store.file {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    Text("Review & upload")
+                    Text(L10n.Add.Review.title)
                         .font(.system(size: 26, weight: .heavy))
                         .tracking(-0.5)
                         .foregroundStyle(HSColor.ink)
@@ -183,8 +183,8 @@ struct AddView: View {
                     .padding(.top, 22)
 
                     HSTextField(
-                        "Label (optional)",
-                        placeholder: "Lipid panel — Jun 25",
+                        L10n.Add.Review.labelField,
+                        placeholder: L10n.Add.Review.labelPlaceholder,
                         text: $store.label
                     )
                     .padding(.top, 22)
@@ -193,7 +193,7 @@ struct AddView: View {
                         errorText(error).padding(.top, 16)
                     }
 
-                    HSButton("Upload", isLoading: store.isUploading) {
+                    HSButton(L10n.Add.Review.upload, isLoading: store.isUploading) {
                         store.send(.uploadTapped)
                     }
                     .padding(.top, 26)
@@ -217,15 +217,15 @@ struct AddView: View {
                         .font(.system(size: 40, weight: .bold))
                         .foregroundStyle(HSColor.success)
                 )
-            Text("Added")
+            Text(L10n.Add.Uploaded.title)
                 .font(.system(size: 22, weight: .heavy))
                 .foregroundStyle(HSColor.ink)
-            Text("We're reading it now. You can leave — we'll ping you the moment it's ready.")
+            Text(L10n.Add.Uploaded.body)
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(HSColor.inkSecondary)
                 .multilineTextAlignment(.center)
             Spacer()
-            HSButton("Done") { store.send(.doneTapped) }
+            HSButton(L10n.Add.Uploaded.done) { store.send(.doneTapped) }
         }
         .padding(24)
     }
@@ -235,7 +235,7 @@ struct AddView: View {
     private func handleScan(_ pages: [UIImage]) {
         guard let data = PDFBuilder.pdf(from: pages),
               let file = PickedFile(data: data, suggestedName: nil) else {
-            store.send(.pickFailed("Couldn't build a document from that scan."))
+            store.send(.pickFailed(L10n.Add.Error.scanFailed))
             return
         }
         store.send(.filePicked(file))
@@ -245,7 +245,7 @@ struct AddView: View {
         photoItem = nil
         guard let data = try? await item.loadTransferable(type: Data.self),
               let file = PickedFile(data: data, suggestedName: nil) else {
-            store.send(.pickFailed("Unsupported file type. Use a PDF, JPEG, PNG or HEIC."))
+            store.send(.pickFailed(L10n.Errors.unsupportedMediaType))
             return
         }
         store.send(.filePicked(file))
@@ -258,7 +258,7 @@ struct AddView: View {
 
         guard let data = try? Data(contentsOf: url),
               let file = PickedFile(data: data, suggestedName: url.lastPathComponent) else {
-            store.send(.pickFailed("Unsupported file type. Use a PDF, JPEG, PNG or HEIC."))
+            store.send(.pickFailed(L10n.Errors.unsupportedMediaType))
             return
         }
         store.send(.filePicked(file))

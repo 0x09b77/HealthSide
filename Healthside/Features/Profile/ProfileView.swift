@@ -21,7 +21,7 @@ struct ProfileView: View {
                 .padding(20)
             }
             .background(HSColor.background)
-            .navigationTitle("Profile")
+            .navigationTitle(L10n.Profile.title)
             .task { store.send(.task) }
         }
     }
@@ -45,7 +45,7 @@ struct ProfileView: View {
                     .foregroundStyle(HSColor.ink)
                     .lineLimit(1)
                 if let memberSince = store.memberSince {
-                    Text("Member since \(memberSince)")
+                    Text(L10n.Profile.memberSince(memberSince))
                         .font(.system(size: 13, weight: .medium))
                         .foregroundStyle(HSColor.inkSecondary)
                 }
@@ -57,7 +57,7 @@ struct ProfileView: View {
     // MARK: - Секции
 
     private var securitySection: some View {
-        section("SECURITY") {
+        section(L10n.Profile.security) {
             if store.hasBiometry {
                 toggleRow(
                     title: store.biometryKind.displayName,
@@ -65,22 +65,22 @@ struct ProfileView: View {
                 )
                 divider
             }
-            row(title: "Auto-lock", value: "After 1 min", isEnabled: false)
+            row(title: L10n.Profile.autoLock, value: L10n.Profile.autoLockValue, isEnabled: false)
             divider
-            row(title: "Change password", isEnabled: false)
+            row(title: L10n.Profile.changePassword, isEnabled: false)
         }
     }
 
     private var privacySection: some View {
-        section("PRIVACY & DATA") {
-            row(title: "Export my data", isEnabled: false)
+        section(L10n.Profile.privacyData) {
+            row(title: L10n.Profile.exportData, isEnabled: false)
             divider
-            row(title: "Delete everything", isEnabled: false)
+            row(title: L10n.Profile.deleteEverything, isEnabled: false)
         }
     }
 
     private var logoutButton: some View {
-        HSButton("Log out", style: .secondary, isLoading: store.isLoggingOut) {
+        HSButton(L10n.Shared.logOut, style: .secondary, isLoading: store.isLoggingOut) {
             store.send(.logoutTapped)
         }
     }

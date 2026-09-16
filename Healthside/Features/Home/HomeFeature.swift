@@ -101,21 +101,12 @@ struct HomeFeature {
         let documentsService = documentsService
         let clock = clock
         return .run { send in
-            var attempt = 0
-            while !Task.isCancelled, attempt <= Polling.maxAttempts {
-                if attempt > 0 {
-                    try await clock.sleep(for: Polling.delay(attempt: attempt))
-                }
-                do {
-                    let documents = try await documentsService.list()
-                    await send(.documentsResponse(.success(documents)))
-                    guard documents.contains(where: { !$0.status.isTerminal }) else { return }
-                } catch {
-                    await send(.documentsResponse(.failure(error as? APIError ?? .unknown)))
-                    return
-                }
-                attempt += 1
-            }
+            try await Polling.run(
+                clock: clock,
+                fetch: { try await documentsService.list() },
+                isTerminal: { documents in !documents.contains { !$0.status.isTerminal } },
+                onResult: { await send(.documentsResponse($0)) }
+            )
         }
     }
 }

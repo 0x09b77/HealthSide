@@ -2,10 +2,12 @@
 //  HSColor.swift
 //  Healthside
 //
-//  Палитра дизайн-системы (тёплая, светлая тема). Значения живут как именованные
-//  цвета в Assets.xcassets, здесь — только алиасы на сгенерированные SwiftGen'ом
+//  Палитра дизайн-системы. Значения (свет + тёмная тема) живут как именованные
+//  цвета в Assets.xcassets — здесь только алиасы на сгенерированные SwiftGen'ом
 //  Asset.* (Generated/Assets.swift), чтобы не переписывать все места использования.
-//  TODO: dark-варианты, когда появятся в дизайне.
+//  Тёмные варианты посчитаны программно (см. HSL-формулу в момент генерации
+//  colorset'ов): точные hex из Design-Spec.md только для bg/surface и акцентов
+//  светлой темы, остальное — производное; стоит свериться глазами при дизайн-ревью.
 //
 
 import SwiftUI
@@ -31,6 +33,9 @@ public enum HSColor {
     public static let coral = Asset.coral.swiftUIColor
     public static let coralRing = Asset.coralRing.swiftUIColor
     public static let coralSoft = Asset.coralSoft.swiftUIColor // мягкий фон под коралловые иконки
+
+    // Второй бренд-акцент (ссылки, `[[Design-Spec]]` §2.1)
+    public static let brandTeal = Asset.brandTeal.swiftUIColor
 
     // Статусы
     public static let danger = Asset.danger.swiftUIColor

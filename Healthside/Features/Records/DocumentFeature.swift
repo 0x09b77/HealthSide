@@ -59,21 +59,12 @@ struct DocumentFeature {
                 let documentsService = documentsService
                 let clock = clock
                 return .run { send in
-                    var attempt = 0
-                    while !Task.isCancelled, attempt <= Polling.maxAttempts {
-                        if attempt > 0 {
-                            try await clock.sleep(for: Polling.delay(attempt: attempt))
-                        }
-                        do {
-                            let document = try await documentsService.document(id: id)
-                            await send(.documentResponse(.success(document)))
-                            if document.status.isTerminal { return }
-                        } catch {
-                            await send(.documentResponse(.failure(error as? APIError ?? .unknown)))
-                            return
-                        }
-                        attempt += 1
-                    }
+                    try await Polling.run(
+                        clock: clock,
+                        fetch: { try await documentsService.document(id: id) },
+                        isTerminal: { $0.status.isTerminal },
+                        onResult: { await send(.documentResponse($0)) }
+                    )
                 }
 
             case let .documentResponse(.success(document)):
@@ -85,16 +76,16 @@ struct DocumentFeature {
 
             case .deleteButtonTapped:
                 state.alert = AlertState {
-                    TextState("Delete this record?")
+                    TextState(L10n.Document.Alert.title)
                 } actions: {
                     ButtonState(role: .destructive, action: .confirmDelete) {
-                        TextState("Delete")
+                        TextState(L10n.Document.Alert.confirm)
                     }
                     ButtonState(role: .cancel) {
-                        TextState("Cancel")
+                        TextState(L10n.Shared.cancel)
                     }
                 } message: {
-                    TextState("This permanently removes your analysis and its data. This can't be undone.")
+                    TextState(L10n.Document.Alert.message)
                 }
                 return .none
 

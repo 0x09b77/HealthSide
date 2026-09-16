@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2AA44C782FEEBCEB0058D6C0 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 2AA44C772FEEBCEB0058D6C0 /* ComposableArchitecture */; };
-		2AA44C7B2FEEBD110058D6C0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 2AA44C7A2FEEBD110058D6C0 /* Alamofire */; };
-		2AA44C802FEEBD460058D6C0 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 2AA44C7F2FEEBD460058D6C0 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,9 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2AA44C802FEEBD460058D6C0 /* Kingfisher in Frameworks */,
 				2AA44C782FEEBCEB0058D6C0 /* ComposableArchitecture in Frameworks */,
-				2AA44C7B2FEEBD110058D6C0 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +72,6 @@
 			name = Healthside;
 			packageProductDependencies = (
 				2AA44C772FEEBCEB0058D6C0 /* ComposableArchitecture */,
-				2AA44C7A2FEEBD110058D6C0 /* Alamofire */,
-				2AA44C7F2FEEBD460058D6C0 /* Kingfisher */,
 			);
 			productName = Healthside;
 			productReference = 2AA44C592FEEB2E50058D6C0 /* Healthside.app */;
@@ -109,8 +103,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				2AA44C762FEEBCEB0058D6C0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				2AA44C792FEEBD110058D6C0 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				2AA44C7E2FEEBD460058D6C0 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2AA44C5A2FEEB2E50058D6C0 /* Products */;
@@ -389,22 +381,6 @@
 			traits = (
 			);
 		};
-		2AA44C792FEEBD110058D6C0 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.12.0;
-			};
-		};
-		2AA44C7E2FEEBD460058D6C0 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.10.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -412,16 +388,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2AA44C762FEEBCEB0058D6C0 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
-		};
-		2AA44C7A2FEEBD110058D6C0 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2AA44C792FEEBD110058D6C0 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		2AA44C7F2FEEBD460058D6C0 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2AA44C7E2FEEBD460058D6C0 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

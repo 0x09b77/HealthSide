@@ -107,6 +107,9 @@ struct ProfileFeature {
                 let authService = authService
                 let tokenStore = tokenStore
                 let refreshToken = tokenStore.refreshToken
+                // Согласие на обработку — per-account, а не per-device: следующий,
+                // кто залогинится на этом устройстве, должен снова пройти Consent.
+                onboarding.setConsentAccepted(false)
                 return .run { send in
                     // Отзыв на сервере идемпотентен; локально чистим в любом случае.
                     if let refreshToken {

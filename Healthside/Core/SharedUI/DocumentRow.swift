@@ -36,12 +36,12 @@ public struct DocumentRow: View {
 public func documentStatusBadge(_ status: ParseStatus) -> HSStatusBadge {
     switch status {
     case .done:
-        HSStatusBadge("Read", systemImage: "checkmark", kind: .success)
+        HSStatusBadge(L10n.Status.Document.done, systemImage: "checkmark", kind: .success)
     case .pending:
-        HSStatusBadge("Queued", systemImage: "clock", kind: .warning)
+        HSStatusBadge(L10n.Status.Document.pending, systemImage: "clock", kind: .warning)
     case .processing:
-        HSStatusBadge("Reading…", systemImage: "clock", kind: .warning)
+        HSStatusBadge(L10n.Status.Document.processing, systemImage: "clock", kind: .warning)
     case .failed:
-        HSStatusBadge("Failed", systemImage: "exclamationmark.triangle", kind: .danger)
+        HSStatusBadge(L10n.Status.Document.failed, systemImage: "exclamationmark.triangle", kind: .danger)
     }
 }

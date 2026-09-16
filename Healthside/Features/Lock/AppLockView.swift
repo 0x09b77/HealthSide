@@ -27,31 +27,31 @@ struct AppLockView: View {
                     )
 
                 if store.isLocked {
-                    Text("Healthside is locked")
+                    Text(L10n.Lock.title)
                         .font(.system(size: 22, weight: .heavy))
                         .foregroundStyle(HSColor.ink)
 
-                    Text("Your health data stays private. Unlock with \(store.biometryKind.displayName) to continue.")
+                    Text(L10n.Lock.body(store.biometryKind.displayName))
                         .font(.system(size: 15, weight: .semibold))
                         .foregroundStyle(HSColor.inkSecondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
 
                     if store.didFail {
-                        Label("Couldn't verify it's you.", systemImage: "exclamationmark.circle.fill")
+                        Label(L10n.Lock.failed, systemImage: "exclamationmark.circle.fill")
                             .font(.system(size: 13, weight: .medium))
                             .foregroundStyle(HSColor.danger)
                     }
 
                     VStack(spacing: 10) {
                         HSButton(
-                            "Unlock with \(store.biometryKind.displayName)",
+                            L10n.Lock.unlockButton(store.biometryKind.displayName),
                             isLoading: store.isAuthenticating
                         ) {
                             store.send(.unlockTapped)
                         }
 
-                        Button("Log out") {
+                        Button(L10n.Shared.logOut) {
                             store.send(.logOutTapped)
                         }
                         .font(.system(size: 14, weight: .semibold))

@@ -29,8 +29,8 @@ struct SetupView: View {
     private var consentStep: some View {
         scaffold(
             icon: "lock.shield.fill",
-            title: "Before we start",
-            body: "To read your analyses, we process them securely with a trusted provider. Personal details are removed first. You can delete everything anytime."
+            title: L10n.Setup.Consent.title,
+            body: L10n.Setup.Consent.body
         ) {
             Button {
                 store.send(.consentToggled)
@@ -39,7 +39,7 @@ struct SetupView: View {
                     Image(systemName: store.consentAccepted ? "checkmark.square.fill" : "square")
                         .font(.system(size: 22))
                         .foregroundStyle(store.consentAccepted ? HSColor.coral : HSColor.inkSecondary)
-                    Text("I agree to secure cloud processing of my documents.")
+                    Text(L10n.Setup.Consent.checkbox)
                         .font(.system(size: 14, weight: .medium))
                         .foregroundStyle(HSColor.ink)
                         .multilineTextAlignment(.leading)
@@ -49,7 +49,7 @@ struct SetupView: View {
             .buttonStyle(.plain)
             .padding(.bottom, 4)
 
-            HSButton("Agree and continue") {
+            HSButton(L10n.Setup.Consent.cta) {
                 store.send(.agreeConsentTapped)
             }
             .disabled(!store.consentAccepted)
@@ -59,13 +59,13 @@ struct SetupView: View {
     private var notificationsStep: some View {
         scaffold(
             icon: "bell.badge.fill",
-            title: "Stay in the loop",
-            body: "Get a notification the moment your results are parsed and ready to view."
+            title: L10n.Setup.Notifications.title,
+            body: L10n.Setup.Notifications.body
         ) {
-            HSButton("Enable notifications", isLoading: store.isRequestingPermission) {
+            HSButton(L10n.Setup.Notifications.enable, isLoading: store.isRequestingPermission) {
                 store.send(.enableNotificationsTapped)
             }
-            HSButton("Not now", style: .secondary) {
+            HSButton(L10n.Setup.Notifications.skip, style: .secondary) {
                 store.send(.skipNotificationsTapped)
             }
         }
@@ -75,13 +75,13 @@ struct SetupView: View {
         let name = store.biometry.displayName
         return scaffold(
             icon: store.biometry == .touchID ? "touchid" : "faceid",
-            title: "Lock with \(name)",
-            body: "Your health data stays private. We'll ask for \(name) each time you open the app."
+            title: L10n.Setup.FaceId.title(name),
+            body: L10n.Setup.FaceId.body(name)
         ) {
-            HSButton("Enable \(name)", isLoading: store.isRequestingPermission) {
+            HSButton(L10n.Setup.FaceId.enable(name), isLoading: store.isRequestingPermission) {
                 store.send(.enableFaceIDTapped)
             }
-            HSButton("Set up later", style: .secondary) {
+            HSButton(L10n.Setup.FaceId.skip, style: .secondary) {
                 store.send(.skipFaceIDTapped)
             }
         }

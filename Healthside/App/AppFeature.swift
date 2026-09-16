@@ -62,6 +62,8 @@ struct AppFeature {
                 }
 
             case .sessionExpired:
+                // Токены уже стёрты AuthInterceptor'ом; согласие — per-account, чистим и его.
+                onboarding.setConsentAccepted(false)
                 state = .auth(AuthFeature.State())
                 return .none
 

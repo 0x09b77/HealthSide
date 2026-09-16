@@ -12,9 +12,9 @@ struct RecordsView: View {
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             VStack(spacing: 0) {
-                Picker("Filter", selection: $store.filter) {
+                Picker(L10n.Records.filterAccessibilityLabel, selection: $store.filter) {
                     ForEach(RecordsFeature.State.Filter.allCases, id: \.self) { filter in
-                        Text(filter.rawValue).tag(filter)
+                        Text(filter.displayName).tag(filter)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -24,8 +24,8 @@ struct RecordsView: View {
                 content
             }
             .background(HSColor.background)
-            .navigationTitle("Records")
-            .searchable(text: $store.searchText, prompt: "Search")
+            .navigationTitle(L10n.Records.title)
+            .searchable(text: $store.searchText, prompt: L10n.Records.searchPrompt)
         } destination: { store in
             switch store.case {
             case let .document(store):
@@ -46,13 +46,13 @@ struct RecordsView: View {
             errorState(error)
         } else if store.isEmpty {
             emptyState(
-                title: "No records yet",
-                message: "Add a lab result and it will show up here."
+                title: L10n.Records.Empty.title,
+                message: L10n.Records.Empty.body
             )
         } else if store.filteredDocuments.isEmpty {
             emptyState(
-                title: "Nothing found",
-                message: "Try a different search or filter."
+                title: L10n.Records.EmptyFiltered.title,
+                message: L10n.Records.EmptyFiltered.body
             )
         } else {
             timeline
@@ -114,7 +114,7 @@ struct RecordsView: View {
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(HSColor.inkSecondary)
                 .multilineTextAlignment(.center)
-            HSButton("Try again", style: .secondary) {
+            HSButton(L10n.Shared.tryAgain, style: .secondary) {
                 store.send(.refresh)
             }
             .padding(.horizontal, 60)

@@ -24,19 +24,19 @@ public nonisolated enum APIError: LocalizedError, Equatable {
 
     public nonisolated var errorDescription: String? {
         switch self {
-        case let .validation(reason): return reason ?? "Validation failed"
-        case .unauthorized: return "Session expired. Please sign in again."
-        case .forbidden: return "You don't have access to this resource."
-        case .notFound: return "Not found."
-        case let .conflict(reason): return reason ?? "Conflict."
-        case .tooManyRequests: return "Too many requests. Try again later."
-        case .fileTooLarge: return "This file is too large. The limit is 20 MB."
-        case .unsupportedMediaType: return "Unsupported file type. Use a PDF, JPEG, PNG or HEIC."
-        case .offline: return "No internet connection."
-        case .timeout: return "Request timed out."
-        case let .server(reason): return reason ?? "Server error."
-        case .decoding: return "Unexpected response format."
-        case .unknown: return "Something went wrong."
+        case let .validation(reason): return reason ?? L10n.Errors.validationFailed
+        case .unauthorized: return L10n.Errors.unauthorized
+        case .forbidden: return L10n.Errors.forbidden
+        case .notFound: return L10n.Errors.notFound
+        case let .conflict(reason): return reason ?? L10n.Errors.conflict
+        case .tooManyRequests: return L10n.Errors.tooManyRequests
+        case .fileTooLarge: return L10n.Errors.fileTooLarge
+        case .unsupportedMediaType: return L10n.Errors.unsupportedMediaType
+        case .offline: return L10n.Errors.offline
+        case .timeout: return L10n.Errors.timeout
+        case let .server(reason): return reason ?? L10n.Errors.server
+        case .decoding: return L10n.Errors.decoding
+        case .unknown: return L10n.Errors.unknown
         }
     }
 }
